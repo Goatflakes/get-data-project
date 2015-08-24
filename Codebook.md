@@ -3,22 +3,36 @@ The run_analysis.R script summaries the data using 4 parts.
 
 ## Part 1
 First the training data set is prepared:
+
 1. A complete set of variable names are read in from "UCI HAR Dataset/features.txt"
+
 2. The training dataset is read in from "UCI HAR Dataset/train/X_train.txt" into a data frame "train" with the variable names as column names. The descriptive names used in the dataset read in in step 1 are used as column names. Some characters present in these names such as () and - are not valid variable names in R so are replaced by periods .
+
 3. All columns of "train" which have names without "mean" or "std" are removed. This removes all columns which aren't means or standard deviations.
+
 4. Descriptive names for activity codes are read in from "UCI HAR Dataset/activity_labels.txt"
+
 5. A the list of activity codes corresponding to measurements in "train" are read in from the file "UCI HAR Dataset/train/y_train.txt".
+
 6. This this is joined with the descriptive activity names read in in 4
+
 7. From the result of the join in 6 the column with the descriptive names is added to "train"
+
 8. The subject_id is read in from the file "UCI HAR Dataset/train/subject_train.txt" and added as a column to "train"
 
 ## Part 2
 Then the same thing is done for the test data set:
+
 1. The training dataset is read in from "UCI HAR Dataset/test/X_test.txt" into a data frame "test" with the descriptive variable names as column names, with the same limitations as mentioned in part 1 step 1 above.
+
 2. All columns of "test" which have names without "mean" or "std" are removed. This removes all columns which aren't means or standard deviations.
+
 3. A the list of activity codes corresponding to measurements in "test" are read in from the file "UCI HAR Dataset/test/y_test.txt".
+
 4. This this is joined with the descriptive activity names read in in step 4 from part 1 above.
+
 5. From the result of the join in 4 the column with the descriptive names is added to "test"
+
 6. The subject_id is read in from the file "UCI HAR Dataset/test/subject_test.txt" and added as a column to "test"
 
 ## Part 3
@@ -26,8 +40,11 @@ The data is combined into one data frame "uci_data" by rbind()ing "test" and "tr
 
 ## Part 4
 The data is summarized using the package reshape2
+
 1. The data is melt()ed into table "meltData", using "subject_id" and "activity" as ID variables, and the rest of the variables as measure variables.
+
 2. "meltData" is recast into a a summary data frame "summary_data", using the formula "subject_id + activity ~ variable" and the function "mean". This gives the requisite average of every variable for each combination of subject and activity.
+
 3. The result is written out as "summary_data.txt" without row names but with column names.
 
 # Variables in the output file "summary_data.txt"
